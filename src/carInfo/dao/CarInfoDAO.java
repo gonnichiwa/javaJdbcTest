@@ -147,5 +147,41 @@ public class CarInfoDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public ArrayList<CarDetail> getCarDetailList() {
+		ArrayList<CarDetail> list = new ArrayList<CarDetail>();
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			// oracle DBMS로 접근하는 주소,계정ID,비번
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "java");
+			// sql 준비
+			String sql = "select cd.cdNum, cd.cdname, cm.CMNAME, cd.cdcc, cd.cdEngineType, cd.cdWheelInch,ci.CIPRICE, cd.CDINPUTDATE\r\n" + 
+					"from carDetail cd, CARMAKER cm, carInfo ci\r\n" + 
+					"where cd.CDMAKER = cm.CMNUM\r\n" + 
+					"and cd.CDNUM = ci.CINUM";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CarDetail result = new CarDetail();
+				result.setCiNum(rs.getInt(1));
+				result.setCiName(rs.getString(2));
+				result.setCiMaker(rs.getString(3));
+				result.setCdcc(rs.getInt(4));
+				result.setCdEngineType(rs.getString(5));
+				result.setCdWheelInch(rs.getInt(6));
+				result.setCiPrice(rs.getInt(7));
+				result.setCdInputDate(rs.getString(8));
+				
+				list.add(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	
 	
 }

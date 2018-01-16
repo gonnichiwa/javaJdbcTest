@@ -15,7 +15,7 @@ public class CarInfoMain {
 		// 입력 (String)
 		Scanner scStr = new Scanner(System.in);
 		System.out.println("다음 메뉴를 선택하세요");
-		System.out.println("1. 자동차 정보 보기  2. 가격정보 입력");
+		System.out.println("1. 자동차 정보 보기  2. 가격정보 입력  3. 자동차 정보 수정");
 		int input = sc.nextInt();
 		
 		// dao 객체 인스턴스 생성
@@ -59,13 +59,26 @@ public class CarInfoMain {
 				
 				// db에 인서트
 				dao.insertCarPriceList(carName,carPrice);
-				System.out.println("인서트 완료");
 				
 			} else if(inputStr.trim().equalsIgnoreCase("N")) {
-				
+				// 종료
 			}
 			
-		} else {
+		} else if(input == 3) {
+			System.out.println("3번을 선택하셨습니다 주인님");
+			// CarDetail의 전체 정보를 불러오기
+			ArrayList<CarDetail> list = dao.getCarDetailList();
+			
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i).toString());
+			}
+			
+			System.out.println("어떤 항목을 수정하시겠습니까? :");
+			int inputNum = sc.nextInt();
+			
+		}
+		
+		else {
 			System.out.println("다른 입력입니다. 입력한 번호 : " + input);
 		}
 		
