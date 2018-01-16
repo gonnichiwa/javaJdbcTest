@@ -76,6 +76,36 @@ public class CarInfoMain {
 			System.out.println("어떤 항목을 수정하시겠습니까? :");
 			int inputNum = sc.nextInt();
 			
+			System.out.println("차명을 입력하세요 : ");
+			String carName = scStr.nextLine();
+			System.out.println("제조사를 입력하세요 : ");
+			String carMaker = scStr.nextLine();
+			System.out.println("배기량을 숫자만 입력하세요 : ");
+			int cc = sc.nextInt();
+			System.out.println("엔진타입을 입력하세요 : ");
+			String engineType = scStr.nextLine();
+			System.out.println("휠 인치를 숫자로 입력하세요 : ");
+			int wheelInch = sc.nextInt();
+			System.out.println("가격을 숫자로 입력하세요 : ");
+			int price = sc.nextInt();
+			
+//			System.out.println(carName);
+//			System.out.println(carMaker);
+//			System.out.println(cc);
+//			System.out.println(engineType);
+//			System.out.println(wheelInch);
+//			System.out.println(price);
+			
+			// 선택 항목 수정
+			dao.updateCarDetail(inputNum,carName,carMaker,cc,engineType,wheelInch);
+			
+			ArrayList<CarDetail> list2 = dao.getCarDetailList();
+			for (int i = 0; i < list2.size(); i++) {
+				System.out.println(list2.get(i).toString());
+			}
+			System.out.println("===========완료===============");
+			
+			
 		}
 		
 		else {

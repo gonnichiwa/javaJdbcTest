@@ -181,6 +181,35 @@ public class CarInfoDAO {
 		
 		return list;
 	}
+
+	public void updateCarDetail(int inputNum,
+			String carName, String carMaker,
+			int cc, String engineType, 
+			int wheelInch) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			// oracle DBMS로 접근하는 주소,계정ID,비번
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "java");
+			
+			// sql 준비
+			String sql = "update CARDETAIL set cdName = ?, cdMaker=?, cdCC=?, cdEnginetype=?, cdWheelInch=?,\r\n" + 
+					"cdInputDate = sysdate\r\n" + 
+					"where cdNum = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, carName);
+			pstmt.setString(2, carMaker);
+			pstmt.setInt(3, cc);
+			pstmt.setString(4, engineType);
+			pstmt.setInt(5, wheelInch);
+			pstmt.setInt(6, inputNum);
+			pstmt.executeUpdate();
+			
+			System.out.println("업데이트 완료");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
